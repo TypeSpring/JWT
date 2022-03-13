@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -69,22 +68,20 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenDto reissue(TokenReqDto tokenReqDto) throws NotFoundException {
+    public TokenDto reissue(TokenReqDto tokenReqDto) {
         // 1. Refresh Token 검증
-        if (!tokenProvider.validateToken(tokenReqDto.getRefreshToken())) {
-            throw new IllegalStateException("invalid refresh token.");
-        }
+        tokenProvider.validateToken(tokenReqDto.getRefreshToken());
 
-        // 2. Access Token 에서 Member ID 가져오기
+        // 2. Access Token 에서 Email 가져오기(테스트 예제이므로 자유롭게 SecurityContextHolder에 세팅할 것)
         Authentication authentication = tokenProvider.getAuthentication(tokenReqDto.getAccessToken());
 
-        // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
+        // 3. 저장소에서 Email 을 기반으로 Refresh Token 값 가져옴
         RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
-                                                          .orElseThrow(() -> new NotFoundException());
+                                                          .orElseThrow(() -> new RuntimeException("Not found refresh token."));
 
         // 4. Refresh Token 일치하는지 검사
         if (!refreshToken.getValue().equals(tokenReqDto.getRefreshToken())) {
-            throw new IllegalStateException("invalid refresh token.");
+            throw new RuntimeException("mismatch refreshToken");
         }
 
         // 5. 새로운 토큰 생성
@@ -96,4 +93,5 @@ public class AuthService {
         // 토큰 발급
         return tokenDto;
     }
+
 }

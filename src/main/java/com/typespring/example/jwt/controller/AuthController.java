@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.typespring.example.jwt.dto.SigninDto;
 import com.typespring.example.jwt.dto.SignupDto;
 import com.typespring.example.jwt.dto.TokenDto;
+import com.typespring.example.jwt.dto.TokenReqDto;
 import com.typespring.example.jwt.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,4 +40,9 @@ public class AuthController {
         return ResponseEntity.ok(tokenDto);
     }
 
+    @PostMapping("/reissue")
+    public ResponseEntity<TokenDto> reissue(@RequestBody TokenReqDto tokenReqDto) {
+        log.info("[Reissue Request] {}", tokenReqDto);
+        return ResponseEntity.ok(authService.reissue(tokenReqDto));
+    }
 }

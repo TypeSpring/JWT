@@ -1,6 +1,7 @@
 package com.typespring.example.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import java.io.IOException;
 
 import com.typespring.example.jwt.service.TokenProvider;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
