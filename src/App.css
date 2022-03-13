@@ -1,0 +1,31 @@
+.SignUp,
+.Login,
+.TokenTest {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.TokenTest__btnTest {
+  margin-top: 50px;
+}
+
+button:hover {
+  background-color: aqua;
+}
+
+button {
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.TokenTest__result {
+  width: 200px;
+  height: 100px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: plum;
+  margin-top: 40px;
+}
