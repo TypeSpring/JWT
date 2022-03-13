@@ -1,4 +1,4 @@
-package com.typespring.jwt;
+package com.typespring.example;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
