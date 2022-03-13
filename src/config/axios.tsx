@@ -6,8 +6,6 @@ export const request: AxiosInstance = axios.create({
 
 // 새로고침하기전까지 header 가 변경이 안되는 이슈
 // => interceptor를 통해서 refresh
-
-<<<<<<< HEAD
 request.interceptors.response.use(
   function (response) {
     console.log("서버로 잘 보내짐");
@@ -33,13 +31,6 @@ request.interceptors.response.use(
 request.interceptors.request.use(
   function (config) {
     console.log("매번 localStorage에서 A_TOKEN 다시 꺼내옴");
-=======
-request.interceptors.request.use(
-  function (config) {
-    console.log("request => config ====================================");
-    console.log(config);
-    console.log("request => config ====================================");
->>>>>>> 25e5cf5abee909f7389f2c2ab97cd44bb302776f
     config.headers.Authorization = `Bearer ${localStorage.getItem("A_TOKEN")}`;
     return config;
   },

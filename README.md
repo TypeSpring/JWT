@@ -1,22 +1,14 @@
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-# JWT
-=======
-### JWT
-
-### JWT를 이용한 로그인 구현
-=======
 ### JWT
 
 JWT를 이용한 로그인 구현
->>>>>>> 25e5cf5abee909f7389f2c2ab97cd44bb302776f
 
 1. 로그인을 하면 서버로부터 응답값을 받아옵니다.
 2. 로그인 성공시 1에서 받은 토큰을 로컬스토리지에 저장하고, TokenTest로 navigate 됩니다.
 3. TokenTest 에서 **GET, POST, DELETE, PUT**을 테스트 해볼 수 있습니다.
 4. 제대로 토큰이 갔다면 서버측에서 응답값으로 보내주고, 이를 화면에 띄워줍니다.
 5. 로그아웃 버튼을 누르면 로컬스토리지에 저장한 토큰을 remove하고 다시 home화면으로 이동합니다.
-<<<<<<< HEAD
+
+![](/images/2022-03-13-21-54-24.png)
 
 ### Refresh
 
@@ -29,7 +21,3 @@ JWT를 이용한 로그인 구현
 7. 6의 경우 만료기간 전에 요청했다면 만료되지 않은 토큰이므로 정상적인 응답값을 준다.
 
 <img width="705" alt="스크린샷 2022-03-13 오후 7 40 53" src="https://user-images.githubusercontent.com/72402747/158057226-75ad9c8a-6d4b-4cc6-8ff8-0ceb857f41f0.png">
->>>>>>> Stashed changes
-=======
-   > > > > > > > c9faff9... feat: add jwt test
->>>>>>> 25e5cf5abee909f7389f2c2ab97cd44bb302776f
