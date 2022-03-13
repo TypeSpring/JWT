@@ -20,4 +20,6 @@ JWT를 이용한 로그인 구현
 6. axios interceptor(**request**)가 새로 발급받은 토큰으로 다시 서버에 요청한다.
 7. 6의 경우 만료기간 전에 요청했다면 만료되지 않은 토큰이므로 정상적인 응답값을 준다.
 
+![](/images/2022-03-14-01-57-55.png)
+
 <img width="705" alt="스크린샷 2022-03-13 오후 7 40 53" src="https://user-images.githubusercontent.com/72402747/158057226-75ad9c8a-6d4b-4cc6-8ff8-0ceb857f41f0.png">
