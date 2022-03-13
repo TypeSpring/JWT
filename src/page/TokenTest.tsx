@@ -13,7 +13,10 @@ const TokenTest: FC = () => {
   };
   const getAxios = async () => {
     await request.get("/test").then((res) => {
+<<<<<<< HEAD
       console.log(res);
+=======
+>>>>>>> 25e5cf5abee909f7389f2c2ab97cd44bb302776f
       setAxiosResult(res.data);
     });
   };
