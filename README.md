@@ -80,3 +80,25 @@ accessToken과 refreshToken이 나눠져 있는 이유는, accessToken이 탈취
 #### DELETE API
 - PUT과 동일합니다.
 ![](/images/2022-03-14-03-02-35.png)
+
+
+
+### RefreshToken을 발급받는 과정
+
+1. Client는 로그인 이후에 AccessToken을 이용하여 각 api들을 사용합니다.
+2. 이 때 서버는 매번 헤더로 넘어오는 이 AccessToken의 유효성을 검사합니다.
+3. 만일, AccessToken의 유효기간이 모두 지났다면, 토큰 만료가 되었다는 것을 미리 만들어 두었던 ExceptionHandling을 통해 401 Response를 내어줍니다.
+4. Client는 AccessToken이 만료가 되었다는 것을 401 Response로 알아차리고, AccessToken과 RefreshToken을 함께 서버에 전송하여 토큰 재발급을 요청합니다.
+5. 서버는 다음과 같은 검증을 거칩니다.
+   1. RefreshToken 유효성 검사
+   2. AccessToken에서 정보만 빼와서 해당 유효 정보로 Member 정보를 가져옵니다.
+   3. Member를 구분할 수 있는 Keyword로 로그인 시 RefreshToken의 Id로 저장했으니, 저장소에 있는 RefreshToken을 가져옵니다.
+   4. 저장소에 있는 RefreshToken과 Client가 토큰 재발급을 위해 보냈던 RefreshToken의 동등성을 검사합니다.
+   5. 일치한다면, 새로운 토큰 세트(AccessToken, RefreshToken)를 발급합니다.
+6. 위 과정을 통해 새로운 토큰을 발급받은 클라이언트는 이 토큰을 이용하여 기존의 요청을 재 전송합니다.
+
+
+
+
+<br/>
+#### 코드 레벨의 자세한 기술은 [블로그](https://blog.naver.com/adamdoha)에서 `JWT`를 검색해주세요..!
