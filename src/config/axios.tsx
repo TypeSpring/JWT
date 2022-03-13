@@ -33,7 +33,6 @@ request.interceptors.request.use(
   function (config) {
     console.log("매번 localStorage에서 A_TOKEN 다시 꺼내옴");
     const a_token = localStorage.getItem("A_TOKEN");
-    console.log(a_token);
     if (a_token !== null) config.headers.Authorization = `Bearer ${a_token}}`;
     return config;
   },
