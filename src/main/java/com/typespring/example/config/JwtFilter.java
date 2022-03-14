@@ -3,7 +3,7 @@ package com.typespring.example.config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -22,7 +22,7 @@ import com.typespring.example.jwt.service.TokenProvider;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-    public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String AUTHORIZATION_HEADER = HttpHeaders.AUTHORIZATION;
     public static final String BEARER_PREFIX = "Bearer ";
 
     private final TokenProvider tokenProvider;
@@ -48,7 +48,11 @@ public class JwtFilter extends OncePerRequestFilter {
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-            return bearerToken.substring(7);
+            final String token = bearerToken.substring(7);
+            if (!StringUtils.hasText(token) || token.equals("null")) {
+                return null;
+            }
+            return token;
         }
         return null;
     }

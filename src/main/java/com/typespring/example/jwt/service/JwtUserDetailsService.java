@@ -18,7 +18,7 @@ import com.typespring.example.member.MemberRepository;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 

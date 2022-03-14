@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     // Pass
-    // h2-console / Swagger / HealthIndicator
+    // h2-console / HealthIndicator
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
@@ -45,14 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // CSRF 설정 Disable
         http.csrf().disable()
-
-            // exception handling 할 때 우리가 만든 클래스를 추가
-            .exceptionHandling()
-            .authenticationEntryPoint(jwtAuthenticationEntryPointHandler)
-            .accessDeniedHandler(jwtAccessDeniedHandler)
-
             // h2-console 을 위한 설정을 추가
-            .and()
             .headers()
             .frameOptions()
             .sameOrigin()
@@ -66,11 +59,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // auth API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
             .and()
             .authorizeRequests()
-            .antMatchers("/api/v1/auth/**").permitAll()
-            .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
+            .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll() // preflight를 위해 설정합니다.
+            .antMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll() // auth로 들어오는 요청은 POST만 허용합니다.
             .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 
             // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
+            .and()
+
+            // exception handling 할 때 우리가 만든 클래스를 추가
+            .exceptionHandling()
+            .authenticationEntryPoint(jwtAuthenticationEntryPointHandler)
+            .accessDeniedHandler(jwtAccessDeniedHandler)
+
             .and()
             .apply(new JwtSecurityConfig(tokenProvider));
     }
