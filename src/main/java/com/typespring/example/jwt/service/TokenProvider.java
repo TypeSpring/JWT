@@ -45,12 +45,26 @@ public class TokenProvider {
 
         long now = (new Date()).getTime();
 
+        /**
+         * Payload
+         * {
+         *   "sub": "123@naver.com",
+         *   "aud": "누가",
+         *   "auth": "ROLE_USER",
+         *   "DolphaGo": "This is DolphaGo",
+         *   "exp": 1649681366,
+         *   "iss": "발급처"
+         * }
+         */
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
                                  .setSubject(authentication.getName())       // payload "sub": "name"
+                                 .setAudience("누가")
                                  .claim(AUTHORITIES_KEY, authorities)        // payload "auth": "ROLE_USER"
+                                 .claim("DolphaGo", "This is DolphaGo")
                                  .setExpiration(accessTokenExpiresIn)        // payload "exp": 1516239022 (예시)
+                                 .setIssuer("발급처")                        // payload "iss" : "발급처"
                                  .signWith(key, SignatureAlgorithm.HS512)    // header "alg": "HS512"
                                  .compact();
 
